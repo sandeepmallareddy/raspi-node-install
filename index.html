@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Raspi-node-install by sandeepmallareddy</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Raspi-node-install</h1>
+        <p>Install latest NodeJS on Raspberry Pi Model B+</p>
+
+        <p class="view"><a href="https://github.com/sandeepmallareddy/raspi-node-install">View the Project on GitHub <small>sandeepmallareddy/raspi-node-install</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/sandeepmallareddy/raspi-node-install/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sandeepmallareddy/raspi-node-install/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sandeepmallareddy/raspi-node-install">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="nodejs-installation-on-arm6---raspberry-pi---model-b" class="anchor" href="#nodejs-installation-on-arm6---raspberry-pi---model-b" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NodeJs installation on ARM6 - Raspberry Pi - Model B+</h1>
+
+<h3>
+<a id="step-0-remove-any-instance-of-older-versions-of-node-you-may-have-installed" class="anchor" href="#step-0-remove-any-instance-of-older-versions-of-node-you-may-have-installed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 0) Remove any instance of older versions of Node you may have installed</h3>
+
+<pre><code>pi@raspberrypi:~$ sudo apt-get remove --purge node
+</code></pre>
+
+<h3>
+<a id="step-1-determine-the-arm-processor-family-used-in-your-pi" class="anchor" href="#step-1-determine-the-arm-processor-family-used-in-your-pi" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 1) Determine the ARM processor family used in your pi</h3>
+
+<pre><code>pi@raspberrypi:~$ uname -a
+Linux raspberrypi 4.4.11+ #888 Mon May 23 20:02:58 BST 2016 armv6l GNU/Linux
+</code></pre>
+
+<h3>
+<a id="armv6l-means-an-armv6-cpu" class="anchor" href="#armv6l-means-an-armv6-cpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><em>armv6l means an ARMv6 CPU</em>
+</h3>
+
+<h3>
+<a id="step-2-download-the-appropriate-binary-from-nodejs-website---httpsnodejsorgendownload" class="anchor" href="#step-2-download-the-appropriate-binary-from-nodejs-website---httpsnodejsorgendownload" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 2) Download the Appropriate binary from NodeJS website - <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a>
+</h3>
+
+<p>On the right top corner choose LTS or the Current version - LTS is preferred.</p>
+
+<p>Under additional Platforms find the ARM binaries(.tar.xz) which correspond to your ARM CPU version v6 (or) v7 (or) v8.</p>
+
+<p>Right Click on the appropriate link and Copy Link</p>
+
+<p><em>Here I am using the 4.5.0 version for ARMv6</em></p>
+
+<p>In your terminal </p>
+
+<pre><code>pi@raspberrypi:~$ wget https://nodejs.org/dist/v4.5.0/node-v4.5.0-linux-armv6l.tar.xz
+
+--2016-09-09 20:44:58--  https://nodejs.org/dist/v4.5.0/node-v4.5.0-linux-armv6l.tar.xz
+Resolving nodejs.org (nodejs.org)... 104.20.22.46, 104.20.23.46, 2400:cb00:2048:1::6814:162e, ...
+Connecting to nodejs.org (nodejs.org)|104.20.22.46|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7470620 (7.1M) [application/x-xz]
+Saving to: ‘node-v4.5.0-linux-armv6l.tar.xz’
+
+node-v4.5.0-linux-armv6l.tar.xz                      100%        
+[=======================================================================================================================&gt;]   7.12M  2.20MB/s   in 3.8s   
+
+2016-09-09 20:45:04 (1.89 MB/s) - ‘node-v4.5.0-linux-armv6l.tar.xz’ saved [7470620/7470620]
+</code></pre>
+
+<h3>
+<a id="optional-ensure-you-can-use-the-tar-command-else-install-it-using" class="anchor" href="#optional-ensure-you-can-use-the-tar-command-else-install-it-using" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>(Optional) Ensure you can use the tar command, else install it using</h3>
+
+<p><em>It is available by default in Raspbian Jessie</em></p>
+
+<pre><code>sudo apt-get install xz-utils
+</code></pre>
+
+<h3>
+<a id="step-3-untar-the-downloaded-binary-to-usrlocal" class="anchor" href="#step-3-untar-the-downloaded-binary-to-usrlocal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 3) Untar the downloaded binary to /usr/local</h3>
+
+<pre><code>pi@raspberrypi:~$ sudo tar -C /usr/local/ --strip-components 1 -xJf node-v4.5.0-linux-armv6l.tar.xz
+</code></pre>
+
+<h3>
+<a id="step-4-the-screen-might-hang-for-sometime-as-the-operation-is-taking-place" class="anchor" href="#step-4-the-screen-might-hang-for-sometime-as-the-operation-is-taking-place" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 4) The screen might hang for sometime as the operation is taking place</h3>
+
+<p>After the operation is complete, check the /usr/local/bin to find node,npm files</p>
+
+<pre><code>pi@raspberrypi:~$ cd /usr/local/bin
+pi@raspberrypi:/usr/local/bin $ ls
+node  npm
+</code></pre>
+
+<h3>
+<a id="step-5-check-for-the-versions-of-node-and-npm" class="anchor" href="#step-5-check-for-the-versions-of-node-and-npm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 5) Check for the versions of node and npm</h3>
+
+<pre><code>pi@raspberrypi:~$ node -v
+4.5.12
+pi@raspberrypi:~$ npm -v
+2.5.19
+</code></pre>
+
+<h3>
+<a id="step-6-your-node-installation-is-ready-to-go" class="anchor" href="#step-6-your-node-installation-is-ready-to-go" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 6) Your node installation is ready to go</h3>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/sandeepmallareddy">sandeepmallareddy</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
